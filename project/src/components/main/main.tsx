@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../../const';
 import FilmCard from '../film-card/film-card';
 import Footer from '../footer/footer';
 import Header from '../header/header';
@@ -51,7 +52,9 @@ export default function Main({
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header />
+        <Header
+          authorizationStatus={AuthorizationStatus.Auth}
+        />
 
         <div className="film-card__wrap">
           <div className="film-card__info">
