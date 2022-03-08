@@ -1,6 +1,6 @@
+import { AuthorizationStatus } from '../../const';
 import Footer from '../footer/footer';
 import Header from '../header/header';
-
 export default function MoviePage(): JSX.Element {
   return (
     <>
@@ -12,7 +12,9 @@ export default function MoviePage(): JSX.Element {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header />
+          <Header
+            authorizationStatus={AuthorizationStatus.Auth}
+          />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
