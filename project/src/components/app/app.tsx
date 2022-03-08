@@ -4,6 +4,9 @@ import Main from '../main/main';
 import PageNotFound404 from '../404/404';
 import MyList from '../mylist/my-list';
 import SignIn from '../login/sign-in';
+import MoviePage from '../films/movie-page';
+import AddReview from '../review/add-review';
+import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
 
 
@@ -54,6 +57,22 @@ function App({
           element={(
             <SignIn />
           )}
+        />
+        <Route
+          path={AppRoute.Film}
+          element={(
+            <MoviePage />
+          )}
+        />
+        <Route
+          path={AppRoute.AddReview}
+          element={(
+            <AddReview/>
+          )}
+        />
+        <Route
+          path={AppRoute.Player}
+          element={<Player/>}
         />
         <Route
           path="*"

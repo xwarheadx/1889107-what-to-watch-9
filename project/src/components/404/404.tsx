@@ -11,8 +11,6 @@ export default function PageNotFound404(): JSX.Element {
       <div>
         <div style={{marginBottom: 40}}>
           <h1 className="page-title" style={{textAlign: 'center'}}>404 Page Not Found</h1>
-
-
         </div>
       </div>
       <Footer />
