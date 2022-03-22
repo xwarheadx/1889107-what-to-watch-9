@@ -1,7 +1,11 @@
 import { AuthorizationStatus } from '../../const';
-import FilmCard from '../film-card/film-card';
+import { Films, SelectedFilm } from '../../types/films';
+import { AppRoute } from '../../const';
+import { useNavigate } from 'react-router-dom';
+import FilmsList from '../films-list/films-list';
 import Footer from '../footer/footer';
 import Header from '../header/header';
+
 
 type GenresItemProps = {
     genre: string,
@@ -26,16 +30,8 @@ function GenresItem({
 
 type WelcomeMainProps = {
   genres: string[],
-  films: Array<{
-    name: string,
-    srcImg: string,
-  }>,
-  selectedFilm: {
-    title: string,
-    genre: string,
-    year: number,
-    srcPoster: string,
-  },
+  films: Films,
+  selectedFilm: SelectedFilm
 };
 
 export default function Main({
@@ -43,6 +39,7 @@ export default function Main({
   films,
   selectedFilm,
 }: WelcomeMainProps): JSX.Element {
+  const navigate = useNavigate();
   return (
     <>
       <section className="film-card">
@@ -70,13 +67,13 @@ export default function Main({
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button" onClick={() => navigate(AppRoute.Player)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button className="btn btn--list film-card__button" type="button" onClick={() => navigate(AppRoute.MyList)}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -104,17 +101,7 @@ export default function Main({
             }
           </ul>
 
-          <div className="catalog__films-list">
-            {
-              films.map((film) => (
-                <FilmCard
-                  key={film.name}
-                  name={film.name}
-                  srcImg={film.srcImg}
-                />
-              ))
-            }
-          </div>
+          <FilmsList films={films}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

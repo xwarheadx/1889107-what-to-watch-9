@@ -1,9 +1,20 @@
-export default function Player(): JSX.Element {
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
+type PlayerProps = {
+  video: string,
+}
+
+export default function Player({
+  video,
+}: PlayerProps): JSX.Element {
+  const navigate = useNavigate();
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={video} className="player__video" poster="img/player-poster.jpg"></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={() => navigate(AppRoute.Main)}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">

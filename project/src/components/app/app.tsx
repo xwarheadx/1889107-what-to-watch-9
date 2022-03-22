@@ -8,27 +8,23 @@ import MoviePage from '../films/movie-page';
 import AddReview from '../review/add-review';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
+import { Films, SelectedFilm } from '../../types/films';
 
 
 type AppProps = {
   genres: string[],
-  films: Array<{
-    name: string,
-    srcImg: string,
-  }>,
-  selectedFilm: {
-    title: string,
-    genre: string,
-    year: number,
-    srcPoster: string,
-  },
+  films: Films,
+  selectedFilm: SelectedFilm,
+  video: string,
 };
 
 function App({
   genres,
   films,
   selectedFilm,
+  video,
 }: AppProps): JSX.Element {
+  const myFilms = films.filter((film, index) => index < 6);
   return (
     <BrowserRouter>
       <Routes>
@@ -48,7 +44,7 @@ function App({
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyList />
+              <MyList myFilms={myFilms}/>
             </PrivateRoute>
           )}
         />
@@ -61,18 +57,18 @@ function App({
         <Route
           path={AppRoute.Film}
           element={(
-            <MoviePage />
+            <MoviePage films={films} />
           )}
         />
         <Route
           path={AppRoute.AddReview}
           element={(
-            <AddReview/>
+            <AddReview film={films[0]} />
           )}
         />
         <Route
           path={AppRoute.Player}
-          element={<Player/>}
+          element={<Player video={video} />}
         />
         <Route
           path="*"
