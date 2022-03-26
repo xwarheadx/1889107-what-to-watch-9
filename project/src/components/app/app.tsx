@@ -24,7 +24,7 @@ function App({
   selectedFilm,
   video,
 }: AppProps): JSX.Element {
-  const myFilms = films.filter((film, index) => index < 6);
+  const myFilms = films.slice(0,5);
   return (
     <BrowserRouter>
       <Routes>

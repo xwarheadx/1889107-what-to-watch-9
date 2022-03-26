@@ -19,10 +19,10 @@ export default function FilmsList({
             key={film.id}
             film={film}
             activateFilm={setActiveFilmId}
+            isActive={film.id === activeFilmId}
           />
         ))
       }
-      {activeFilmId}
     </div>
   );
 }
