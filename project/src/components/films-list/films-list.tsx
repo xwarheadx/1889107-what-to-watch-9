@@ -5,7 +5,6 @@ import FilmCard from '../film-card/film-card';
 type FilmsListProps = {
   films: Films
 }
-
 export default function FilmsList({
   films,
 }: FilmsListProps): JSX.Element {

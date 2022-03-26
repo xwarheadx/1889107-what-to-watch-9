@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { AppRoute } from '../../const';
 import { Film } from '../../types/films';
-import VideoPlayer from '../video/video';
+import VideoPreview from '../video-preview/video-preview';
+
 type FilmCardProps = {
   film: Film,
   isActive: boolean,
@@ -25,7 +26,7 @@ export default function FilmCard({
       onMouseOut={() => setAutoPlay(false)}
     >
       <div className="small-film-card__image">
-        <VideoPlayer
+        <VideoPreview
           previewVideo={film.previewVideo}
           poster={film.src}
           isPlaying={autoPlay}

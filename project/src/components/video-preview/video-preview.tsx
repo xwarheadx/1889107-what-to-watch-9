@@ -7,7 +7,7 @@ type VideoProps = {
   isPlaying?: boolean,
 }
 
-export default function VideoPlayer({
+export default function VideoPreview({
   previewVideo,
   poster,
   muted = false,
