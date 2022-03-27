@@ -5,7 +5,6 @@ import FilmCard from '../film-card/film-card';
 type FilmsListProps = {
   films: Films
 }
-
 export default function FilmsList({
   films,
 }: FilmsListProps): JSX.Element {
@@ -19,10 +18,10 @@ export default function FilmsList({
             key={film.id}
             film={film}
             activateFilm={setActiveFilmId}
+            isActive={film.id === activeFilmId}
           />
         ))
       }
-      {activeFilmId}
     </div>
   );
 }
