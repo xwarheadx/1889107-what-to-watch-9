@@ -32,8 +32,6 @@ function App({
           path={AppRoute.Main}
           element={(
             <Main
-              genres={genres}
-              films={films}
               selectedFilm={selectedFilm}
             />
           )}
@@ -71,7 +69,7 @@ function App({
           element={<Player video={video} />}
         />
         <Route
-          path="*"
+          path={AppRoute.Error404}
           element={<PageNotFound404 />}
         />
       </Routes>

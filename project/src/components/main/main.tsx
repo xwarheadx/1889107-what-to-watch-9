@@ -1,45 +1,24 @@
+import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
-import { Films, SelectedFilm } from '../../types/films';
+import { getAllGenres } from '../../utils';
+import { SelectedFilm } from '../../types/films';
 import { AppRoute } from '../../const';
 import { useNavigate } from 'react-router-dom';
 import FilmsList from '../films-list/films-list';
 import Footer from '../footer/footer';
+import GenresItemList from '../genres-list/genres-list';
 import Header from '../header/header';
 
-
-type GenresItemProps = {
-    genre: string,
-    isActive?: boolean,
-  }
-
-function GenresItem({
-  genre,
-  isActive = false,
-}: GenresItemProps): JSX.Element {
-  return (
-    <li className={`catalog__genres-item ${
-      isActive
-        ? 'catalog__genres-item--active'
-        : ''}
-        `}
-    >
-      <a href="/" className="catalog__genres-link">{genre}</a>
-    </li>
-  );
-}
-
 type WelcomeMainProps = {
-  genres: string[],
-  films: Films,
   selectedFilm: SelectedFilm
 };
 
 export default function Main({
-  genres,
-  films,
   selectedFilm,
 }: WelcomeMainProps): JSX.Element {
   const navigate = useNavigate();
+  const {films} = useAppSelector((state) => state);
+  const allGenres = getAllGenres(films);
   return (
     <>
       <section className="film-card">
@@ -88,18 +67,7 @@ export default function Main({
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <ul className="catalog__genres-list">
-            {
-              genres.map((genre) => (
-                <GenresItem
-                  key={genre}
-                  genre={genre}
-                  isActive={genre === 'All genres'}
-                />
-              ))
-            }
-          </ul>
+          <GenresItemList allGenres={allGenres}/>
 
           <FilmsList films={films}/>
 

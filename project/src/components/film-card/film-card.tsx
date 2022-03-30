@@ -21,7 +21,6 @@ export default function FilmCard({
       className="small-film-card catalog__films-card"
       onMouseOver={() => {
         setAutoPlay(true);
-        return activateFilm(film.id);
       }}
       onMouseOut={() => setAutoPlay(false)}
     >
