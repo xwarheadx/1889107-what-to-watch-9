@@ -1,18 +1,21 @@
 import { MouseEvent } from 'react';
+import { COUNT_LOADED_CARD } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setGenre } from '../../store/actions';
 
 type GenresItemProps = {
   allGenres: string[],
+  setCountCardShow: (value: number) => void,
 }
 
-function GenresItemList({allGenres}: GenresItemProps): JSX.Element {
+function GenresItemList({allGenres, setCountCardShow}: GenresItemProps): JSX.Element {
   const dispatch = useAppDispatch();
   const currentGenre = useAppSelector((state) => state.genre);
 
   const handleChangeGenreClick = (evt: MouseEvent, genre: string) => {
     evt.preventDefault();
     dispatch(setGenre(genre));
+    setCountCardShow(COUNT_LOADED_CARD);
   };
 
   return (

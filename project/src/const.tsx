@@ -15,3 +15,4 @@ export enum AuthorizationStatus {
 }
 
 export const DEFAULT_GENRE = 'All genres';
+export const COUNT_LOADED_CARD = 8;
