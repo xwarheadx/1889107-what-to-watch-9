@@ -4,7 +4,7 @@ export default function FormAddComments(): JSX.Element {
 
   const [ratings, setRatings] = useState(0);
   const [message, setMessage] = useState('');
-  const commentFieldChangeHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleCommentFieldChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = evt.target;
     setMessage(value);
   };
@@ -23,7 +23,7 @@ export default function FormAddComments(): JSX.Element {
           </div>
         </div>
         <div className="add-review__text">
-          <textarea onChange={commentFieldChangeHandler} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={message}></textarea>
+          <textarea onChange={handleCommentFieldChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={message}></textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>

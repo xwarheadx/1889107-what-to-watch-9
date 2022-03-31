@@ -1,11 +1,12 @@
 import { AuthorizationStatus, AppRoute } from '../../const';
+import PageNotFound404 from '../404/404';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import MoreLikeThis from '../more-like-this/more-like-this';
 import MovieNavigation from '../navigation/movie-navigation';
 import { Film, Films } from '../../types/films';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import {getFilmById} from '../../utils';
+import { getFilmById } from '../../utils';
 
 type MoviePageProps = {
   films: Films,
@@ -18,7 +19,7 @@ export default function MoviePage({
   const film: Film | undefined = getFilmById(films, id);
   const navigate = useNavigate();
   if (film === undefined) {
-    return <Link to="*"/>;
+    return <PageNotFound404 />;
   }
   return (
     <>

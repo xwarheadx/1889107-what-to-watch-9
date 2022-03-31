@@ -7,12 +7,12 @@ type MoreLikeThisProps = {
 }
 
 function MoreLikeThis({films, genre}: MoreLikeThisProps): JSX.Element {
-  const likeFilms = films.filter((film) => film.genre === genre);
+  const sameFilms = films.filter((film) => film.genre === genre);
 
   return (
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
-      <FilmsList films={likeFilms}/>
+      <FilmsList films={sameFilms}/>
     </section>
   );
 }

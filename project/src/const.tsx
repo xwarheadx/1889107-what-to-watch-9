@@ -5,6 +5,7 @@ SignIn = '/login',
 Film = '/films/:id',
 AddReview = '/films/:id/review',
 Player = '/player/:id',
+Error404 = '*'
 }
 
 export enum AuthorizationStatus {
@@ -12,3 +13,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const DEFAULT_GENRE = 'All genres';
