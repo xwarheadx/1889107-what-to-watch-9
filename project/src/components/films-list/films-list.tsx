@@ -11,8 +11,7 @@ export default function FilmsList({
   films,
 }: FilmsListProps): JSX.Element {
   const [activeFilmId, setActiveFilmId] = useState('');
-  const genre = useAppSelector((state) => state.genre);
-  const currentFilms = getFilmsByGenre(films, genre);
+  const currentFilms = useAppSelector(getFilmsByGenre);
   return (
     <div className="catalog__films-list">
       {
