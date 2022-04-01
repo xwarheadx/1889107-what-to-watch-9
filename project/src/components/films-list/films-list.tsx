@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { useAppSelector } from '../../hooks';
 import { Films } from '../../types/films';
-import { getFilmsByGenre } from '../../utils';
 import FilmCard from '../film-card/film-card';
 
 type FilmsListProps = {
@@ -11,11 +9,11 @@ export default function FilmsList({
   films,
 }: FilmsListProps): JSX.Element {
   const [activeFilmId, setActiveFilmId] = useState('');
-  const currentFilms = useAppSelector(getFilmsByGenre);
+
   return (
     <div className="catalog__films-list">
       {
-        currentFilms.map((film) => (
+        films.map((film) => (
           <FilmCard
             key={film.id}
             film={film}

@@ -1,6 +1,8 @@
+import { useState } from 'react';
+import { COUNT_LOADED_CARD } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
-import { getAllGenres } from '../../utils';
+import { getAllGenres, getFilmsByGenre } from '../../utils';
 import { SelectedFilm } from '../../types/films';
 import { AppRoute } from '../../const';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +10,7 @@ import FilmsList from '../films-list/films-list';
 import Footer from '../footer/footer';
 import GenresItemList from '../genres-list/genres-list';
 import Header from '../header/header';
+import ShowMoreButtron from '../show-more-button/show-more-button';
 
 type WelcomeMainProps = {
   selectedFilm: SelectedFilm
@@ -18,6 +21,8 @@ export default function Main({
 }: WelcomeMainProps): JSX.Element {
   const navigate = useNavigate();
   const {films} = useAppSelector((state) => state);
+  const [countCardShow, setCountCardShow] = useState(COUNT_LOADED_CARD);
+  const currentFilms = useAppSelector(getFilmsByGenre).slice(0, countCardShow);
   const allGenres = getAllGenres(films);
   return (
     <>
@@ -67,13 +72,11 @@ export default function Main({
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresItemList allGenres={allGenres}/>
+          <GenresItemList allGenres={allGenres} setCountCardShow={setCountCardShow}/>
 
-          <FilmsList films={films}/>
+          <FilmsList films={currentFilms}/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {countCardShow <= currentFilms.length ? <ShowMoreButtron countCardShow={countCardShow} setCountCardShow={setCountCardShow}/> : ''}
         </section>
 
         <Footer />
