@@ -1,18 +1,25 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { getFilmById } from '../../utils';
+import { Film } from '../../types/films';
+import PageNotFound404 from '../404/404';
 
 type PlayerProps = {
-  video: string,
+  films: Film[]
 }
 
 export default function Player({
-  video,
+  films,
 }: PlayerProps): JSX.Element {
   const navigate = useNavigate();
-
+  const {id} = useParams<{id: string}>();
+  const film: Film | undefined = getFilmById(films, id);
+  if (film === undefined) {
+    return <PageNotFound404 />;
+  }
   return (
     <div className="player">
-      <video src={video} className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} className="player__video" poster={film.previewImage}></video>
 
       <button type="button" className="player__exit" onClick={() => navigate(AppRoute.Main)}>Exit</button>
 
@@ -22,7 +29,7 @@ export default function Player({
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{film.runTime}</div>
         </div>
 
         <div className="player__controls-row">
@@ -32,7 +39,7 @@ export default function Player({
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

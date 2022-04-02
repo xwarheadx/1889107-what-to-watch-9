@@ -1,18 +1,28 @@
+import { useParams } from 'react-router-dom';
+import { getFilmById } from '../../utils';
+import PageNotFound404 from '../404/404';
 import { Film } from '../../types/films';
 import FormAddComments from '../comments/add-comments';
 import Logo from '../logo/logo';
 type AddReviewProps = {
-  film: Film,
+  films: Film[],
 }
 
 export default function AddReview({
-  film,
+  films,
 }: AddReviewProps): JSX.Element {
+  const {id} = useParams<{id: string}>();
+  const film: Film | undefined = getFilmById(films, id);
+
+  if (film === undefined) {
+    return <PageNotFound404 />;
+  }
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film.src} alt={film.name} />
+          <img src={film.previewImage} alt={film.name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
 
@@ -42,7 +52,7 @@ export default function AddReview({
         </header>
       </div>
       <div className="film-card__poster film-card__poster--small">
-        <img src={film.src} alt={film.name} width="218" height="327" />
+        <img src={film.posterImage} alt={film.name} width="218" height="327" />
       </div>
       <FormAddComments />
     </section>

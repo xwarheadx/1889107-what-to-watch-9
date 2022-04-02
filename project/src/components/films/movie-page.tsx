@@ -1,12 +1,13 @@
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { getFilmById } from '../../utils';
 import { AuthorizationStatus, AppRoute } from '../../const';
+import { Film, Films } from '../../types/films';
 import PageNotFound404 from '../404/404';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import MoreLikeThis from '../more-like-this/more-like-this';
 import MovieNavigation from '../navigation/movie-navigation';
-import { Film, Films } from '../../types/films';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { getFilmById } from '../../utils';
+
 
 type MoviePageProps = {
   films: Films,
@@ -65,7 +66,7 @@ export default function MoviePage({
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.src} alt={film.name} width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
             <MovieNavigation film={film}/>
           </div>
