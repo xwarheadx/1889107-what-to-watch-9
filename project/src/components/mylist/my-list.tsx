@@ -1,13 +1,13 @@
-import Header from '../header/header';
 import { AuthorizationStatus } from '../../const';
-import FilmsList from '../films-list/films-list';
 import { Films } from '../../types/films';
+import Header from '../header/header';
+import FilmsList from '../films-list/films-list';
 type MyListProps = {
-  myFilms: Films,
+  films: Films,
 }
 
 export default function MyList({
-  myFilms,
+  films,
 }: MyListProps): JSX.Element {
   return (
     <div className="user-page">
@@ -18,7 +18,7 @@ export default function MyList({
       />
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList films={myFilms} />
+        <FilmsList films={films} />
       </section>
     </div>
   );

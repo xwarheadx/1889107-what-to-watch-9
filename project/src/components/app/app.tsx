@@ -1,48 +1,37 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
 import Main from '../main/main';
 import PageNotFound404 from '../404/404';
 import MyList from '../mylist/my-list';
 import SignIn from '../login/sign-in';
 import MoviePage from '../films/movie-page';
+import LoadingScreen from '../loading-screen/loading-screen';
 import AddReview from '../review/add-review';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
-import { Films, SelectedFilm } from '../../types/films';
 
 
-type AppProps = {
-  genres: string[],
-  films: Films,
-  selectedFilm: SelectedFilm,
-  video: string,
-};
+function App(): JSX.Element {
+  const {isDataLoaded} = useAppSelector((state) => state);
+  const {films, promoFilm} = useAppSelector((state) => state);
 
-function App({
-  genres,
-  films,
-  selectedFilm,
-  video,
-}: AppProps): JSX.Element {
-  const myFilms = films.slice(0,5);
+  if (!isDataLoaded || promoFilm === null) {
+    return (
+      <LoadingScreen/>
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={(
-            <Main
-              selectedFilm={selectedFilm}
-            />
-          )}
-        />
+        <Route path={AppRoute.Main} element={<Main films={films} promoFilm={promoFilm}/>}/>
         <Route
           path={AppRoute.MyList}
           element={(
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyList myFilms={myFilms}/>
+              <MyList films={films} />
             </PrivateRoute>
           )}
         />
@@ -61,12 +50,12 @@ function App({
         <Route
           path={AppRoute.AddReview}
           element={(
-            <AddReview film={films[0]} />
+            <AddReview films={films} />
           )}
         />
         <Route
           path={AppRoute.Player}
-          element={<Player video={video} />}
+          element={<Player films={films} />}
         />
         <Route
           path={AppRoute.Error404}
