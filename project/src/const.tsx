@@ -7,7 +7,9 @@ Films = '/films',
 AddReview = '/films/:id/review',
 Player = '/player/:id',
 PromoFilm = '/promo',
-Error404 = '/404'
+Error404 = '/404',
+Login = '/login',
+Logout = '/logout',
 }
 
 export enum AuthorizationStatus {

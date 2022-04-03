@@ -1,5 +1,5 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { Route, Routes } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import Main from '../main/main';
 import PageNotFound404 from '../404/404';
@@ -10,6 +10,8 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import AddReview from '../review/add-review';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browse-history';
 
 
 function App(): JSX.Element {
@@ -22,18 +24,12 @@ function App(): JSX.Element {
     );
   }
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<Main films={films} promoFilm={promoFilm}/>}/>
         <Route
           path={AppRoute.MyList}
-          element={(
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
-              <MyList films={films} />
-            </PrivateRoute>
-          )}
+          element={<PrivateRoute><MyList films={films}/></PrivateRoute>}
         />
         <Route
           path={AppRoute.SignIn}
@@ -62,7 +58,7 @@ function App(): JSX.Element {
           element={<PageNotFound404 />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
