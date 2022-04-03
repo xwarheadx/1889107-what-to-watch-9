@@ -1,7 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_GENRE } from '../../const';
+import { resetUser, setUser } from './../actions/actions';
+import { AuthorizationStatus, DEFAULT_GENRE } from '../../const';
 import { Film } from '../../types/films';
-import { loadFilms, loadPromoFilm, setError, setGenre } from '../actions/actions';
+import { loadFilms, loadPromoFilm, setError, setGenre, requireAuthorization } from '../actions/actions';
+import { UserData } from '../../types/user';
 
 type initialStateTypes = {
   genre: string,
@@ -9,6 +11,8 @@ type initialStateTypes = {
   promoFilm: Film | null,
   error: string,
   isDataLoaded: boolean,
+  requireAuthorization: AuthorizationStatus,
+  user: UserData | null,
 }
 
 const initialState: initialStateTypes = {
@@ -17,6 +21,8 @@ const initialState: initialStateTypes = {
   promoFilm: null,
   error: '',
   isDataLoaded: false,
+  requireAuthorization: AuthorizationStatus.Unknown,
+  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -29,6 +35,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadPromoFilm, (state, action) => {
       state.promoFilm = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.requireAuthorization = action.payload;
+    })
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
+    })
+    .addCase(resetUser, (state) => {
+      state.user = null;
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
