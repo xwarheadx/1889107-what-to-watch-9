@@ -1,20 +1,38 @@
-import { useParams } from 'react-router-dom';
-import { getFilmById } from '../../utils';
+import { useEffect, useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getFilmById } from '../../services/api';
 import PageNotFound404 from '../404/404';
 import { Film } from '../../types/films';
 import FormAddComments from '../comments/add-comments';
-import Logo from '../logo/logo';
-type AddReviewProps = {
-  films: Film[],
-}
+import Header from '../header/header';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-export default function AddReview({
-  films,
-}: AddReviewProps): JSX.Element {
+export default function AddReview(): JSX.Element {
   const {id} = useParams<{id: string}>();
-  const film: Film | undefined = getFilmById(films, id);
+  const [film, setFilm] = useState<Film | null>(null);
+  const [loading, setLoading]= useState(true);
+  const {requireAuthorization} = useAppSelector((state) => state);
 
-  if (film === undefined) {
+  useEffect(() => {
+    getFilmById(Number(id)).then((data) => {
+      setFilm(data);
+      setLoading(false);
+    });
+  }, [id]);
+
+  if(requireAuthorization !== AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.SignIn}/>;
+  }
+
+  if (loading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
+
+  if (film === null){
     return <PageNotFound404 />;
   }
 
@@ -24,39 +42,22 @@ export default function AddReview({
         <div className="film-card__bg">
           <img src={film.previewImage} alt={film.name} />
         </div>
+
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
+        <Header
+          authorizationStatus={AuthorizationStatus.Auth}
+        />
 
-          <Logo />
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{film.name}</a>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="/">Add review</a>
-              </li>
-            </ul>
-          </nav>
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link" href="/">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        <div className="film-card__poster film-card__poster--small">
+          <img src={film.posterImage} alt={film.name} width="218" height="327" />
+        </div>
       </div>
-      <div className="film-card__poster film-card__poster--small">
-        <img src={film.posterImage} alt={film.name} width="218" height="327" />
+
+      <div className="add-review">
+        <FormAddComments filmId={film.id}/>
       </div>
-      <FormAddComments />
+
     </section>
   );
 }
-
-

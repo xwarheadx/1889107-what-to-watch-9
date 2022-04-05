@@ -1,9 +1,9 @@
 import { AuthorizationStatus } from '../../const';
-import { Films } from '../../types/films';
+import { Film } from '../../types/films';
 import Header from '../header/header';
 import FilmsList from '../films-list/films-list';
 type MyListProps = {
-  films: Films,
+  films: Film[],
 }
 
 export default function MyList({

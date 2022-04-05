@@ -1,8 +1,8 @@
-import { Films } from '../../types/films';
+import { Film } from '../../types/films';
 import FilmCard from '../film-card/film-card';
 
 type FilmsListProps = {
-  films: Films
+  films: Film[]
 }
 export default function FilmsList({
   films,

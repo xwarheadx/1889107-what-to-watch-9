@@ -1,4 +1,4 @@
-import {createAction} from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Film } from '../../types/films';
 import { UserData } from '../../types/user';
@@ -11,3 +11,4 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 export const redirectToRoute = createAction<AppRoute>('user/redirectToRoute');
 export const setUser = createAction<UserData>('user/setUser');
 export const resetUser = createAction('user/resetUser');
+export const dataIsLoading = createAction('data/dataIsLoading');

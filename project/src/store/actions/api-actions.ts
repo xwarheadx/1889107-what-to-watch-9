@@ -2,7 +2,7 @@ import { AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../../const';
 import { store, api } from '../store';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Film } from '../../types/films';
-import { loadFilms, loadPromoFilm, redirectToRoute, requireAuthorization, resetUser, setError, setUser } from './actions';
+import { dataIsLoading, loadFilms, loadPromoFilm, redirectToRoute, requireAuthorization, resetUser, setError, setUser } from './actions';
 import { errorHandle } from '../../services/error-handler';
 import { AuthData, UserData } from '../../types/user';
 import { dropToken, saveToken } from '../../services/token';
@@ -21,6 +21,7 @@ export const fetchFilmsAction = createAsyncThunk(
   'data/fetchFilms',
   async () => {
     try {
+      store.dispatch(dataIsLoading());
       const {data} = await api.get<Film[]>(AppRoute.Films);
       store.dispatch(loadFilms(data));
     } catch (error) {
@@ -33,6 +34,7 @@ export const fetchPromoFilmAction = createAsyncThunk(
   'data/fetchPromoFilm',
   async () => {
     try {
+      store.dispatch(dataIsLoading());
       const {data} = await api.get<Film>(AppRoute.PromoFilm);
       store.dispatch(loadPromoFilm(data));
     } catch (error) {

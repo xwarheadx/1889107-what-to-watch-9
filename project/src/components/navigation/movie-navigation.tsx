@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState, MouseEvent} from 'react';
 import { Film } from '../../types/films';
 import MovieDetailsTab from '../movie-details/movie-details-tab';
@@ -46,17 +45,17 @@ export default function MovieNavigation({film}: MovieNavigationProps): JSX.Eleme
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
           <li className={`film-nav__item ${setClassActive(MoviePageTabLinks.overview)}`}>
-            <a href="#" className="film-nav__link" onClick={handleOverviewTabLinkClick}>
+            <a href="*" className="film-nav__link" onClick={handleOverviewTabLinkClick}>
               {MoviePageTabLinks.overview}
             </a>
           </li>
           <li className={`film-nav__item ${setClassActive(MoviePageTabLinks.details)}`}>
-            <a href="#" className="film-nav__link" onClick={handleDetailsTabLinkClick}>
+            <a href="*" className="film-nav__link" onClick={handleDetailsTabLinkClick}>
               {MoviePageTabLinks.details}
             </a>
           </li>
           <li className={`film-nav__item ${setClassActive(MoviePageTabLinks.reviews)}`}>
-            <a href="#" className="film-nav__link" onClick={handleReviewsTabLinkClick}>
+            <a href="*" className="film-nav__link" onClick={handleReviewsTabLinkClick}>
               {MoviePageTabLinks.reviews}
             </a>
           </li>
@@ -64,7 +63,7 @@ export default function MovieNavigation({film}: MovieNavigationProps): JSX.Eleme
       </nav>
       {currentLink === MoviePageTabLinks.overview && <MovieOverviewTab film={film}/>}
       {currentLink === MoviePageTabLinks.details && <MovieDetailsTab film={film}/>}
-      {currentLink === MoviePageTabLinks.reviews && <MovieReviewsTab/>}
+      {currentLink === MoviePageTabLinks.reviews && <MovieReviewsTab filmId={film.id}/>}
     </div>
   );
 }

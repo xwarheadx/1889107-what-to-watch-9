@@ -5,8 +5,7 @@ import Main from '../main/main';
 import PageNotFound404 from '../404/404';
 import MyList from '../mylist/my-list';
 import SignIn from '../login/sign-in';
-import MoviePage from '../films/movie-page';
-import LoadingScreen from '../loading-screen/loading-screen';
+import MoviePage from '../movie-page/movie-page';
 import AddReview from '../review/add-review';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
@@ -15,18 +14,11 @@ import browserHistory from '../../browse-history';
 
 
 function App(): JSX.Element {
-  const {isDataLoaded} = useAppSelector((state) => state);
-  const {films, promoFilm} = useAppSelector((state) => state);
-
-  if (!isDataLoaded || promoFilm === null) {
-    return (
-      <LoadingScreen/>
-    );
-  }
+  const {films} = useAppSelector((state) => state);
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path={AppRoute.Main} element={<Main films={films} promoFilm={promoFilm}/>}/>
+        <Route path={AppRoute.Main} element={<Main films={films}/>}/>
         <Route
           path={AppRoute.MyList}
           element={<PrivateRoute><MyList films={films}/></PrivateRoute>}
@@ -40,13 +32,13 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Film}
           element={(
-            <MoviePage films={films} />
+            <MoviePage />
           )}
         />
         <Route
           path={AppRoute.AddReview}
           element={(
-            <AddReview films={films} />
+            <AddReview/>
           )}
         />
         <Route
