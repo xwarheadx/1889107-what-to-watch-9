@@ -1,13 +1,29 @@
-import { Films } from '../../types/films';
+import { useEffect, useState } from 'react';
+import { getSimilarFilms } from '../../services/api';
+import { Film } from '../../types/films';
 import FilmsList from '../films-list/films-list';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type MoreLikeThisProps = {
-  films: Films,
-  genre: string,
+  filmId: number
 }
 
-function MoreLikeThis({films, genre}: MoreLikeThisProps): JSX.Element {
-  const sameFilms = films.filter((film) => film.genre === genre);
+function MoreLikeThis({filmId}: MoreLikeThisProps): JSX.Element {
+  const [sameFilms, setSameFilms] = useState<Film[]>([]);
+  const [loading, setLoading]= useState(true);
+
+  useEffect(() => {
+    getSimilarFilms(filmId).then((data) => {
+      setSameFilms(data);
+      setLoading(false);
+    });
+  }, [filmId]);
+
+  if (loading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
 
   return (
     <section className="catalog catalog--like-this">

@@ -1,33 +1,44 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { getFilmById } from '../../utils';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AuthorizationStatus, AppRoute } from '../../const';
-import { Film, Films } from '../../types/films';
+import { useAppSelector } from '../../hooks';
+import { getFilmById } from '../../services/api';
+import { Film } from '../../types/films';
 import PageNotFound404 from '../404/404';
 import Footer from '../footer/footer';
 import Header from '../header/header';
+import LoadingScreen from '../loading-screen/loading-screen';
 import MoreLikeThis from '../more-like-this/more-like-this';
 import MovieNavigation from '../navigation/movie-navigation';
 
-
-type MoviePageProps = {
-  films: Films,
-}
-
-export default function MoviePage({
-  films,
-}: MoviePageProps): JSX.Element {
-  const {id} = useParams<{id: string}>();
-  const film: Film | undefined = getFilmById(films, id);
+export default function MoviePage(): JSX.Element {
   const navigate = useNavigate();
-  if (film === undefined) {
+  const {id} = useParams();
+  const [film, setFilm] = useState<Film | null>(null);
+  const [loading, setLoading]= useState(true);
+  const {requireAuthorization} = useAppSelector((state) => state);
+
+  useEffect(() => {
+    getFilmById(Number(id)).then((data) => {
+      setFilm(data);
+      setLoading(false);
+    });
+  }, [id]);
+
+  if (loading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
+  if (film === null) {
     return <PageNotFound404 />;
   }
   return (
-    <>
+    <React.Fragment>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <Header
@@ -44,7 +55,7 @@ export default function MoviePage({
 
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button"
-                  onClick={() => navigate(`/player/${id}`)}
+                  onClick={() => navigate(`/player/${film.id}`)}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
@@ -57,7 +68,9 @@ export default function MoviePage({
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={AppRoute.AddReview} className="btn film-card__button">Add review</Link>
+                {
+                  requireAuthorization === AuthorizationStatus.Auth  &&  <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+                }
               </div>
             </div>
           </div>
@@ -74,10 +87,9 @@ export default function MoviePage({
       </section>
 
       <div className="page-content">
-        <MoreLikeThis films={films} genre={film.genre} />
-
+        <MoreLikeThis filmId={film.id}/>
         <Footer />
       </div>
-    </>
+    </React.Fragment>
   );
 }
