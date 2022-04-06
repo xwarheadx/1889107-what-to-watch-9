@@ -2,8 +2,10 @@ import { AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../../const';
 import { store, api } from '../store';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Film } from '../../types/films';
+import { UserComment } from '../../types/comment';
 import { dataIsLoading, loadFilms, loadPromoFilm, redirectToRoute, requireAuthorization, resetUser, setError, setUser } from './actions';
 import { errorHandle } from '../../services/error-handler';
+import { addNewComment } from '../../services/api';
 import { AuthData, UserData } from '../../types/user';
 import { dropToken, saveToken } from '../../services/token';
 
@@ -79,6 +81,17 @@ export const logoutAction = createAsyncThunk(
       dropToken();
       store.dispatch(resetUser());
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+export const addCommentAction = createAsyncThunk(
+  'film/addComment',
+  async ({filmId, comment, rating}: UserComment) => {
+    try {
+      await addNewComment(comment,rating,filmId);
+      store.dispatch(redirectToRoute(`${AppRoute.Films}/${filmId}`));
     } catch (error) {
       errorHandle(error);
     }

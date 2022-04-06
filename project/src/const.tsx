@@ -10,7 +10,7 @@ PromoFilm = '/promo',
 Error404 = '/404',
 Login = '/login',
 Logout = '/logout',
-Comment = '/comments',
+Comment = '/',
 }
 
 export enum AuthorizationStatus {
@@ -21,7 +21,6 @@ export enum AuthorizationStatus {
 
 export enum HTTP_CODE {
   BAD_REQUEST = 400,
-  OK = 200,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }

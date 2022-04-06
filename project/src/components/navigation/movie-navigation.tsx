@@ -1,4 +1,4 @@
-import {useState, MouseEvent} from 'react';
+import { useState, MouseEvent } from 'react';
 import { Film } from '../../types/films';
 import MovieDetailsTab from '../movie-details/movie-details-tab';
 import MovieOverviewTab from '../movie-overview-tab/movie-overview-tab';
