@@ -17,7 +17,7 @@ export default function Header({
 }: HeaderProps): JSX.Element {
   const userHeadType: string = isTypeUserPage ? 'user-page__head' : 'film-card__head';
   const navigate = useNavigate();
-  const { requireAuthorization, user } = useAppSelector((state) => state);
+  const { requireAuthorization, user } = useAppSelector((state) => state.USER);
   const dispatch = useAppDispatch();
   return (
     <header className={`page-header ${userHeadType}`}>

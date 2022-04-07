@@ -1,18 +1,15 @@
 import { Film } from './types/films';
 import { DEFAULT_GENRE, TYPE_RATING_TEXT, TYPE_RATING_VALUE} from './const';
-import { State } from './types/state';
-
-export const getFilmById = (films: Film[],  id: string | undefined): Film | undefined => films.find((film) => film.id === Number(id));
 
 export const getAllGenres = (films: Film[]) => ([...new Set([DEFAULT_GENRE, ...films.map((film) => film.genre)])]);
 
-export const getFilmsByGenre = (state: State) => {
-  if(state.genre === DEFAULT_GENRE) {
-    return state.films;
+export const getFilmsByGenre = (films: Film[], genre: string) => {
+  if(genre === DEFAULT_GENRE) {
+    return films;
   }
-
-  return state.films.filter((film) => film.genre === state.genre);
+  return films.filter((film) => film.genre === genre);
 };
+
 
 export const getTextRatingDescription = (rating: number): TYPE_RATING_TEXT => {
   if(rating < TYPE_RATING_VALUE.Bad) {
