@@ -15,11 +15,13 @@ export default function FilmsList({
   const allGenres = getAllGenres(films);
   const [genre, setGenre] = useState(DEFAULT_GENRE);
   const [countCardShow, setCountCardShow] = useState(COUNT_LOADED_CARD);
-  const currentFilms = getFilmsByGenre(films, genre).slice(0, countCardShow);  return (
+  const currentFilms = getFilmsByGenre(films, genre).slice(0, countCardShow);
+  const FilmCards = useMemo(() => currentFilms.map((film) => (<FilmCard key={film.id} film={film}/>)), [currentFilms]);
+  return (
     <>
       <GenresItemList currentGenre={genre} setGenre={setGenre} allGenres={allGenres} setCountCardShow={setCountCardShow}/>
       <div className="catalog__films-list">
-        {useMemo(() => currentFilms.map((film) => (<FilmCard key={film.id} film={film}/>)), [currentFilms])}
+        {FilmCards}
       </div>
       {countCardShow <= currentFilms.length ? <ShowMoreButton countCardShow={countCardShow} setCountCardShow={setCountCardShow}/> : ''}
     </>);
