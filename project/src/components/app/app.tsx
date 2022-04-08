@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks';
 import Main from '../main/main';
 import PageNotFound404 from '../404/404';
 import MyList from '../mylist/my-list';
@@ -14,25 +13,24 @@ import browserHistory from '../../browse-history';
 
 
 function App(): JSX.Element {
-  const {films} = useAppSelector((state) => state);
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path={AppRoute.Main} element={<Main films={films}/>}/>
+        <Route path={AppRoute.Main} element={<Main/>}/>
         <Route
           path={AppRoute.MyList}
-          element={<PrivateRoute><MyList films={films}/></PrivateRoute>}
+          element={<PrivateRoute><MyList/></PrivateRoute>}
         />
         <Route
           path={AppRoute.SignIn}
           element={(
-            <SignIn />
+            <SignIn/>
           )}
         />
         <Route
           path={AppRoute.Film}
           element={(
-            <MoviePage />
+            <MoviePage/>
           )}
         />
         <Route
@@ -43,11 +41,11 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Player}
-          element={<Player films={films} />}
+          element={<Player/>}
         />
         <Route
           path={AppRoute.Error404}
-          element={<PageNotFound404 />}
+          element={<PageNotFound404/>}
         />
       </Routes>
     </HistoryRouter>

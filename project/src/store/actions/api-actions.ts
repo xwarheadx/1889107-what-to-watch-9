@@ -3,11 +3,14 @@ import { store, api } from '../store';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Film } from '../../types/films';
 import { UserComment } from '../../types/comment';
-import { dataIsLoading, loadFilms, loadPromoFilm, redirectToRoute, requireAuthorization, resetUser, setError, setUser } from './actions';
+import { redirectToRoute } from './actions';
 import { errorHandle } from '../../services/error-handler';
 import { addNewComment } from '../../services/api';
 import { AuthData, UserData } from '../../types/user';
 import { dropToken, saveToken } from '../../services/token';
+import { dataIsLoading, loadFilms, loadPromoFilm } from '../film-data/film-data';
+import { requireAuthorization, resetUser, setUser } from '../user-processor/user-processor';
+import { setError } from '../film-processor/film-processor';
 
 export const clearErrorAction = createAsyncThunk(
   'game/clearError',
@@ -86,6 +89,7 @@ export const logoutAction = createAsyncThunk(
     }
   },
 );
+
 export const addCommentAction = createAsyncThunk(
   'film/addComment',
   async ({filmId, comment, rating}: UserComment) => {

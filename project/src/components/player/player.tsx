@@ -1,20 +1,30 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { getFilmById } from '../../utils';
+import { getFilmById } from '../../services/api';
 import { Film } from '../../types/films';
 import PageNotFound404 from '../404/404';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type PlayerProps = {
-  films: Film[]
-}
-
-export default function Player({
-  films,
-}: PlayerProps): JSX.Element {
+export default function Player(): JSX.Element {
   const navigate = useNavigate();
   const {id} = useParams<{id: string}>();
-  const film: Film | undefined = getFilmById(films, id);
-  if (film === undefined) {
+  const [film, setFilm] = useState<Film | null>(null);
+  const [loading, setLoading]= useState(true);
+  useEffect(() => {
+    getFilmById(Number(id)).then((data) => {
+      setFilm(data);
+      setLoading(false);
+    });
+  }, [id]);
+
+  if (loading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
+
+  if (film === null) {
     return <PageNotFound404 />;
   }
   return (

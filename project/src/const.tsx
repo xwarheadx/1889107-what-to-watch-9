@@ -38,6 +38,13 @@ export enum TYPE_RATING_VALUE {
   Good = 8,
   VeryGood = 10
 }
+
+export enum Names {
+  data = 'DATA',
+  film = 'FILM',
+  user = 'USER',
+}
+
 export const DEFAULT_GENRE = 'All genres';
 export const COUNT_LOADED_CARD = 8;
 export const TIMEOUT_SHOW_ERROR = 2000;

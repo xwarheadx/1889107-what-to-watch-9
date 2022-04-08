@@ -1,27 +1,16 @@
-import { useState } from 'react';
-import { COUNT_LOADED_CARD } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
-import { getAllGenres, getFilmsByGenre } from '../../utils';
-import { Film } from '../../types/films';
 import FilmsList from '../films-list/films-list';
 import Footer from '../footer/footer';
-import GenresItemList from '../genres-list/genres-list';
 import Header from '../header/header';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PromoFilm from '../promo-film/promo-film';
-import ShowMoreButtron from '../show-more-button/show-more-button';
 
-type WelcomeMainProps = {
-  films: Film[],
-};
+export default function Main(): JSX.Element {
 
-export default function Main({films}: WelcomeMainProps): JSX.Element {
+  const {isDataLoaded, promoFilm} = useAppSelector((state) => state.DATA);
+  const {films} = useAppSelector((state) => state.DATA);
 
-  const {isDataLoaded, promoFilm} = useAppSelector((state) => state);
-  const [countCardShow, setCountCardShow] = useState(COUNT_LOADED_CARD);
-  const currentFilms = useAppSelector(getFilmsByGenre).slice(0, countCardShow);
-  const allGenres = getAllGenres(films);
   if (!isDataLoaded || promoFilm === null) {
     return (
       <LoadingScreen/>
@@ -45,13 +34,9 @@ export default function Main({films}: WelcomeMainProps): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresItemList allGenres={allGenres} setCountCardShow={setCountCardShow}/>
 
-          <FilmsList films={currentFilms}/>
-
-          {countCardShow <= currentFilms.length ? <ShowMoreButtron countCardShow={countCardShow} setCountCardShow={setCountCardShow}/> : ''}
+          <FilmsList films={films}/>
         </section>
-
         <Footer />
       </div>
     </>

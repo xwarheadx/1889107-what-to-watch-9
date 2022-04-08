@@ -1,14 +1,10 @@
 import { AuthorizationStatus } from '../../const';
-import { Film } from '../../types/films';
+import { useAppSelector } from '../../hooks';
 import Header from '../header/header';
 import FilmsList from '../films-list/films-list';
-type MyListProps = {
-  films: Film[],
-}
 
-export default function MyList({
-  films,
-}: MyListProps): JSX.Element {
+export default function MyList(): JSX.Element {
+  const {films} = useAppSelector((state) => state.DATA);
   return (
     <div className="user-page">
       <Header

@@ -1,6 +1,6 @@
 import request from 'axios';
 import { HTTP_CODE } from '../const';
-import { setError } from '../store/actions/actions';
+import { setError } from '../store/film-processor/film-processor';
 import { clearErrorAction } from '../store/actions/api-actions';
 import { store } from '../store/store';
 import { Error } from '../types/error';
