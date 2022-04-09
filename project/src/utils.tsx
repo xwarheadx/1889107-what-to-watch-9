@@ -36,3 +36,12 @@ export const formatDate = (date: string): string => {
   const newDate = new Date(date);
   return newDate.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
 };
+export const checkFilmInFavoriteList = (film: Film, favoritList: Film[]) => {
+  const result = favoritList.filter((filmFromList) => filmFromList.id === film.id);
+
+  if(result.length > 0) {
+    return true;
+  }
+
+  return false;
+};

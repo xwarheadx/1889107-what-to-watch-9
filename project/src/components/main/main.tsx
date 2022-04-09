@@ -8,10 +8,10 @@ import PromoFilm from '../promo-film/promo-film';
 
 export default function Main(): JSX.Element {
 
-  const {isDataLoaded, promoFilm} = useAppSelector((state) => state.DATA);
+  const {isFilmDataLoaded, promoFilm} = useAppSelector((state) => state.DATA);
   const {films} = useAppSelector((state) => state.DATA);
 
-  if (!isDataLoaded || promoFilm === null) {
+  if (!isFilmDataLoaded || promoFilm === null) {
     return (
       <LoadingScreen/>
     );

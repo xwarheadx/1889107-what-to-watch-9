@@ -10,7 +10,7 @@ type MovieReviewsTabProps = {
 
 function MovieReviewsTab({filmId}: MovieReviewsTabProps): JSX.Element {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [loading, setLoading]= useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getFilmComments(filmId).then((data) => {

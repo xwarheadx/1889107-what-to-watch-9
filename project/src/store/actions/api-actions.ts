@@ -7,18 +7,29 @@ import { redirectToRoute } from './actions';
 import { errorHandle } from '../../services/error-handler';
 import { addNewComment } from '../../services/api';
 import { AuthData, UserData } from '../../types/user';
+import { FavoriteFilmFetch } from '../../types/favorite';
 import { dropToken, saveToken } from '../../services/token';
-import { dataIsLoading, loadFilms, loadPromoFilm } from '../film-data/film-data';
+import { dataIsLoading, loadFavoriteList, loadFilms, loadPromoFilm } from '../film-data/film-data';
 import { requireAuthorization, resetUser, setUser } from '../user-processor/user-processor';
 import { setError } from '../film-processor/film-processor';
 
-export const clearErrorAction = createAsyncThunk(
-  'game/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
+export const addFavoriteAction = createAsyncThunk(
+  'data/addFavorite',
+  async ({filmId, type}: FavoriteFilmFetch) => {
+    try {
+      await api.post<Film>(`${AppRoute.Favorite}/${filmId}/${type}`);
+      store.dispatch(fetchFavoriteListAction());
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchFavoriteListAction = createAsyncThunk(
+  'data/fetchFavoriteList',
+  async () => {
+    const {data} = await api.get<Film>(`${AppRoute.Favorite}`);
+    store.dispatch(loadFavoriteList(data));
   },
 );
 
@@ -99,5 +110,14 @@ export const addCommentAction = createAsyncThunk(
     } catch (error) {
       errorHandle(error);
     }
+  },
+);
+export const clearErrorAction = createAsyncThunk(
+  'film/clearError',
+  () => {
+    setTimeout(
+      () => store.dispatch(setError('')),
+      TIMEOUT_SHOW_ERROR,
+    );
   },
 );

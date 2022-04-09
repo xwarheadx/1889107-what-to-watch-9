@@ -26,7 +26,7 @@ export default function FormAddComments({filmId}: FormAddCommentsProps): JSX.Ele
     checkValidationFormData();
   };
 
-  const submitFormCommentHandler = (evt: FormEvent) => {
+  const handleSubmitFormComment = (evt: FormEvent) => {
     evt.preventDefault();
     setDisabledForm(true);
 
@@ -34,7 +34,7 @@ export default function FormAddComments({filmId}: FormAddCommentsProps): JSX.Ele
   };
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={submitFormCommentHandler}>
+      <form action="#" className="add-review__form" onSubmit={handleSubmitFormComment}>
         <div className="rating">
           <div className="rating__stars">
             {Array.from({length: 10}).map((_, index) => (

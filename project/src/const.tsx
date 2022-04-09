@@ -10,7 +10,8 @@ PromoFilm = '/promo',
 Error404 = '/404',
 Login = '/login',
 Logout = '/logout',
-Comment = '/',
+Comment = '/comments',
+Favorite = '/favorite',
 }
 
 export enum AuthorizationStatus {
@@ -43,6 +44,11 @@ export enum Names {
   data = 'DATA',
   film = 'FILM',
   user = 'USER',
+}
+
+export enum FavoriteFetchType {
+  Add = 1,
+  Remove = 0,
 }
 
 export const DEFAULT_GENRE = 'All genres';

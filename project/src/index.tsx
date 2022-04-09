@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import ErrorMessage from './components/error-message/error-message';
-import { checkAuthAction, fetchFilmsAction, fetchPromoFilmAction } from './store/actions/api-actions';
+import { checkAuthAction, fetchFavoriteListAction, fetchFilmsAction, fetchPromoFilmAction } from './store/actions/api-actions';
 import { store } from './store/store';
 
 store.dispatch(fetchFilmsAction());
 store.dispatch(fetchPromoFilmAction());
 store.dispatch(checkAuthAction());
+store.dispatch(fetchFavoriteListAction());
 
 ReactDOM.render(
   <React.StrictMode>
