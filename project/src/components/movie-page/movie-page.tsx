@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AuthorizationStatus, AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus, FavoriteFetchType } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmById } from '../../services/api';
+import { addFavoriteAction } from '../../store/actions/api-actions';
 import { Film } from '../../types/films';
+import { checkFilmInFavoriteList } from '../../utils';
 import PageNotFound404 from '../404/404';
 import Footer from '../footer/footer';
 import Header from '../header/header';
@@ -17,6 +19,19 @@ export default function MoviePage(): JSX.Element {
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading]= useState(true);
   const {requireAuthorization} = useAppSelector((state) => state.USER);
+  const {favoriteList} = useAppSelector((state) => state.DATA);
+  const [typeFavoriteAction, setTypeFavoriteAction] = useState<FavoriteFetchType>(FavoriteFetchType.Add);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if(film) {
+      if(checkFilmInFavoriteList(film, favoriteList)) {
+        setTypeFavoriteAction(FavoriteFetchType.Remove);
+      } else {
+        setTypeFavoriteAction(FavoriteFetchType.Add);
+      }
+    }
+  }, [favoriteList, film]);
 
   useEffect(() => {
     getFilmById(Number(id)).then((data) => {
@@ -62,12 +77,22 @@ export default function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button" onClick={() => navigate(AppRoute.MyList)}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                {AuthorizationStatus.Auth === requireAuthorization && (
+                  <button className="btn btn--list film-card__button" type="button" onClick={() => dispatch(addFavoriteAction({filmId: film.id, type: typeFavoriteAction}))}>
+                    {
+                      typeFavoriteAction
+                        ?
+                        <svg viewBox="0 0 19 20" width="19" height="20">
+                          <use xlinkHref="#add"></use>
+                        </svg>
+                        :
+                        <svg viewBox="0 0 18 14" width="18" height="14">
+                          <use xlinkHref="#in-list"></use>
+                        </svg>
+                    }
+                    <span>My list</span>
+                  </button>
+                )}
                 {
                   requireAuthorization === AuthorizationStatus.Auth  &&  <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
                 }

@@ -1,16 +1,18 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Film } from '../../types/films';
 import VideoPreview from '../video-preview/video-preview';
 
-type FilmCardProps = {
+
+type RenderFilmCardProps = {
   film: Film,
   }
 
-export default function FilmCard({
+function RenderFilmCard({
   film,
 
-}: FilmCardProps): JSX.Element {
+}: RenderFilmCardProps): JSX.Element {
   const [autoPlay, setAutoPlay] = useState(false);
   return (
     <article
@@ -39,3 +41,4 @@ export default function FilmCard({
     </article>
   );
 }
+export const FilmCard = React.memo(RenderFilmCard);

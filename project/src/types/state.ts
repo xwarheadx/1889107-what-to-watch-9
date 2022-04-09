@@ -15,7 +15,8 @@ export type FilmProcess = {
 export type FilmData = {
   films: Film[],
   promoFilm: Film | null,
-  isDataLoaded: boolean,
+  isFilmDataLoaded: boolean,
+  favoriteList: Film[],
 };
 export type State = ReturnType<typeof store.getState>;
 

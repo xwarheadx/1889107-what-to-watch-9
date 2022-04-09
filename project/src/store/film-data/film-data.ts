@@ -5,7 +5,8 @@ import { Names } from '../../const';
 const initialState: FilmData = {
   films: [],
   promoFilm: null,
-  isDataLoaded: false,
+  isFilmDataLoaded: false,
+  favoriteList: [],
 };
 
 export const filmData = createSlice({
@@ -14,16 +15,20 @@ export const filmData = createSlice({
   reducers: {
     loadPromoFilm: (state, action) => {
       state.promoFilm = action.payload;
-      state.isDataLoaded = true;
+      state.isFilmDataLoaded = true;
     },
     dataIsLoading: (state) => {
-      state.isDataLoaded  = false;
+      state.isFilmDataLoaded = false;
     },
     loadFilms: (state, action) => {
       state.films = action.payload;
-      state.isDataLoaded = true;
+      state.isFilmDataLoaded = true;
+    },
+    loadFavoriteList: (state, action) => {
+      state.favoriteList = action.payload;
+      state.isFilmDataLoaded = true;
     },
   },
 });
 
-export const {loadPromoFilm, dataIsLoading, loadFilms} = filmData.actions;
+export const {loadPromoFilm, dataIsLoading, loadFilms, loadFavoriteList} = filmData.actions;
