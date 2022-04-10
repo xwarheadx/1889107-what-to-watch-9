@@ -1,6 +1,6 @@
-import { FormEvent, useState, useEffect, Fragment, useCallback } from 'react';
+import { FormEvent, useState, Fragment} from 'react';
 import { useDispatch } from 'react-redux';
-import { MAX_RATING, MIN_RATING, MAX_USER_COMMENT_SYMBOLS_COUNT, MIN_USER_COMMENT_SYMBOLS_COUNT } from '../../const';
+import { MAX_RATING, MAX_USER_COMMENT_SYMBOLS_COUNT, MIN_USER_COMMENT_SYMBOLS_COUNT } from '../../const';
 import { addCommentAction } from '../../store/actions/api-actions';
 
 type AddCommentsProps = {
@@ -11,19 +11,7 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
 
   const [rating, setRatings] = useState(0);
   const [comment, setComment] = useState('');
-  const [disabledForm, setDisabledForm] = useState(false);
-  const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
   const dispatch = useDispatch();
-
-  const checkValidationFormData = useCallback((ratingValue, commentLength) => {
-    if(ratingValue > MIN_RATING && commentLength >= MIN_USER_COMMENT_SYMBOLS_COUNT){
-      setDisabledSubmitButton(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    checkValidationFormData(rating, comment.length);
-  }, [rating, comment.length, checkValidationFormData]);
 
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRatings(Number(evt.target.value));
@@ -41,7 +29,6 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
 
   const handleSubmitFormComment = (evt: FormEvent) => {
     evt.preventDefault();
-    setDisabledForm(true);
     dispatch(addCommentAction({filmId, comment, rating}));
   };
 
@@ -72,11 +59,10 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
         <div className="add-review__text">
           <textarea onChange={handleCommentFieldChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={comment} required
             maxLength={MAX_USER_COMMENT_SYMBOLS_COUNT}
-            disabled={disabledForm && true}
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={(disabledSubmitButton || disabledForm) && true} >Post</button>
+            <button className="add-review__btn" type="submit" disabled={comment.length < MIN_USER_COMMENT_SYMBOLS_COUNT || comment.length > MAX_USER_COMMENT_SYMBOLS_COUNT || !rating}>Post</button>
           </div>
         </div>
       </form>
