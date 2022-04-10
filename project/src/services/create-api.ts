@@ -50,9 +50,8 @@ export const getFilmComments = async (filmId: number) => {
   try {
     const {data} = await api.get(`${AppRoute.Comment}/${filmId}`);
     return data;
-  } catch (error) {
-    errorHandler(error);
-  }
+  } catch (error)
+  {errorHandler(error);}
 };
 
 export const addNewComment = async (comment: string,  rating: number, filmId: number) => {
