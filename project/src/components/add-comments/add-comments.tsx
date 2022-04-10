@@ -1,6 +1,6 @@
 import { FormEvent, useState, useEffect, Fragment, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { MAX_RATING, MAX_USER_COMMENT_SYMBOLS_COUNT, MIN_USER_COMMENT_SYMBOLS_COUNT } from '../../const';
+import { MAX_RATING, MIN_RATING, MAX_USER_COMMENT_SYMBOLS_COUNT, MIN_USER_COMMENT_SYMBOLS_COUNT } from '../../const';
 import { addCommentAction } from '../../store/actions/api-actions';
 
 type AddCommentsProps = {
@@ -16,7 +16,7 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
   const dispatch = useDispatch();
 
   const checkValidationFormData = useCallback((ratingValue, commentLength) => {
-    if(ratingValue > 0 && commentLength >= 50){
+    if(ratingValue > MIN_RATING && commentLength >= MIN_USER_COMMENT_SYMBOLS_COUNT){
       setDisabledSubmitButton(false);
     }
   }, []);
@@ -59,7 +59,6 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
                   value={value}
                   checked={rating === value}
                   onChange={handleRatingChange}
-                  disabled={disabledForm && true}
                 />
                 <label
                   className="rating__label"
@@ -72,7 +71,6 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
         </div>
         <div className="add-review__text">
           <textarea onChange={handleCommentFieldChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={comment} required
-            minLength={MIN_USER_COMMENT_SYMBOLS_COUNT}
             maxLength={MAX_USER_COMMENT_SYMBOLS_COUNT}
             disabled={disabledForm && true}
           >
