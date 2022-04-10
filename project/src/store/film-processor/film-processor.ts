@@ -1,13 +1,13 @@
 import { FilmProcess } from '../../types/state';
 import { createSlice } from '@reduxjs/toolkit';
-import { Names } from '../../const';
+import { TypeNames } from '../../const';
 
 const initialState: FilmProcess = {
   error: '',
 };
 
 export const filmProcessor = createSlice({
-  name: Names.film,
+  name: TypeNames.film,
   initialState,
   reducers: {
     setError: (state, action) => {

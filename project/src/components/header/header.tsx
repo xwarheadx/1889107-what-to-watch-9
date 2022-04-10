@@ -5,13 +5,13 @@ import { logoutAction } from '../../store/actions/api-actions';
 import Logo from '../logo/logo';
 
 type HeaderProps = {
-  authorizationStatus: AuthorizationStatus,
+  children?: JSX.Element | null;
   title?: string,
   isTypeUserPage?: boolean,
 }
 
 export default function Header({
-  authorizationStatus,
+  children,
   title,
   isTypeUserPage,
 }: HeaderProps): JSX.Element {
@@ -22,7 +22,7 @@ export default function Header({
   return (
     <header className={`page-header ${userHeadType}`}>
       <Logo />
-
+      {children}
       { title && (
         <h1 className="page-title user-page__title">{title}</h1>
       )}

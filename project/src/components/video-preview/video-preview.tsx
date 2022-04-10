@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-
-type VideoProps = {
+import { PREVIEW_TIMEOUT } from '../../const';
+type VideoPreviewProps = {
   previewVideo: string,
   poster: string,
   muted?: boolean,
@@ -12,7 +12,7 @@ export default function VideoPreview({
   poster,
   muted = false,
   isPlaying,
-}: VideoProps): JSX.Element {
+}: VideoPreviewProps): JSX.Element {
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -22,7 +22,7 @@ export default function VideoPreview({
     }
     let videoTimer: NodeJS.Timeout | null = null;
     if (isPlaying) {
-      videoTimer = setTimeout(() => videoRef.current?.play(), 1000);}
+      videoTimer = setTimeout(() => videoRef.current?.play(), PREVIEW_TIMEOUT);}
     videoRef.current.load();
     return () => {
       videoTimer && clearTimeout(videoTimer);

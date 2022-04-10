@@ -1,6 +1,6 @@
 import { useState, MouseEvent } from 'react';
 import { Film } from '../../types/films';
-import MovieDetailsTab from '../movie-details/movie-details-tab';
+import MovieDetailsTab from '../movie-details-tab/movie-details-tab';
 import MovieOverviewTab from '../movie-overview-tab/movie-overview-tab';
 import MovieReviewsTab from '../movie-reviews-tab/movie-reviews-tab';
 

@@ -1,14 +1,14 @@
 import { MouseEvent } from 'react';
 import { COUNT_LOADED_CARD } from '../../const';
 
-type GenresItemProps = {
+type GenresListProps = {
   allGenres: string[],
   setCountCardShow: (value: number) => void,
   setGenre: (genre: string) => void,
   currentGenre: string,
 }
 
-function GenresItemList({allGenres, setCountCardShow, setGenre, currentGenre}: GenresItemProps): JSX.Element {
+function GenresList({allGenres, setCountCardShow, setGenre, currentGenre}: GenresListProps): JSX.Element {
 
   const handleChangeGenreClick = (evt: MouseEvent, genre: string) => {
     evt.preventDefault();
@@ -29,4 +29,4 @@ function GenresItemList({allGenres, setCountCardShow, setGenre, currentGenre}: G
   );
 }
 
-export default GenresItemList;
+export default GenresList;

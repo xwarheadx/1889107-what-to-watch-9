@@ -1,4 +1,3 @@
-
 import Logo from '../logo/logo';
 import Footer from '../footer/footer';
 

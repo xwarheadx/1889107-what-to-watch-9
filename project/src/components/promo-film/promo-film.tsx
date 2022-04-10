@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthorizationStatus, FavoriteFetchType } from '../../const';
+import { AuthorizationStatus, TypeFavoriteFetch } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addFavoriteAction } from '../../store/actions/api-actions';
 import { Film } from '../../types/films';
@@ -15,14 +15,14 @@ function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
   const {name, genre, released, posterImage} = promoFilm;
   const {favoriteList} = useAppSelector((state) => state.DATA);
   const {requireAuthorization} = useAppSelector((state) => state.USER);
-  const [typeFavoriteAction, setTypeFavoriteAction] = useState<FavoriteFetchType>(FavoriteFetchType.Add);
+  const [typeFavoriteAction, setTypeFavoriteAction] = useState<TypeFavoriteFetch>(TypeFavoriteFetch.Add);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if(checkFilmInFavoriteList(promoFilm, favoriteList)) {
-      setTypeFavoriteAction(FavoriteFetchType.Remove);
+      setTypeFavoriteAction(TypeFavoriteFetch.Remove);
     } else {
-      setTypeFavoriteAction(FavoriteFetchType.Add);
+      setTypeFavoriteAction(TypeFavoriteFetch.Add);
     }
   }, [favoriteList, promoFilm]);
 

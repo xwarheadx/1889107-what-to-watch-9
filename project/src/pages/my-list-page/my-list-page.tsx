@@ -1,14 +1,12 @@
-import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
-import Header from '../header/header';
-import FilmsList from '../films-list/films-list';
+import Header from '../../components/header/header';
+import FilmsList from '../../components/films-list/films-list';
 
 export default function MyList(): JSX.Element {
   const {favoriteList} = useAppSelector((state) => state.DATA);
   return (
     <div className="user-page">
       <Header
-        authorizationStatus={AuthorizationStatus.Auth}
         title="My list"
         isTypeUserPage
       />

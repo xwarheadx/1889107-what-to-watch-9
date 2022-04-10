@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
-import { getFilmById } from '../../services/api';
-import PageNotFound404 from '../404/404';
 import { Film } from '../../types/films';
-import FormAddComments from '../comments/add-comments';
-import Header from '../header/header';
-import LoadingScreen from '../loading-screen/loading-screen';
+import { useAppSelector } from '../../hooks';
+import { getFilmById } from '../../services/create-api';
+import PageNotFound404 from '../../components/page-not-found-404/page-not-found-404';
+import AddComments from '../../components/add-comments/add-comments';
+import AddBreadcrumbs from '../../components/add-breadcrumbs/add-breadcrumbs';
+import Header from '../../components/header/header';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 export default function AddReview(): JSX.Element {
   const {id} = useParams<{id: string}>();
@@ -31,11 +32,12 @@ export default function AddReview(): JSX.Element {
       <LoadingScreen/>
     );
   }
-
   if (film === null){
-    return <PageNotFound404 />;
+    return (<PageNotFound404 />);
   }
-
+  if (film === undefined) {
+    return (<PageNotFound404 />);
+  }
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -45,9 +47,9 @@ export default function AddReview(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header
-          authorizationStatus={AuthorizationStatus.Auth}
-        />
+        <Header>
+          <AddBreadcrumbs film={film}/>
+        </Header>
 
         <div className="film-card__poster film-card__poster--small">
           <img src={film.posterImage} alt={film.name} width="218" height="327" />
@@ -55,7 +57,7 @@ export default function AddReview(): JSX.Element {
       </div>
 
       <div className="add-review">
-        <FormAddComments filmId={film.id}/>
+        <AddComments filmId={film.id}/>
       </div>
 
     </section>

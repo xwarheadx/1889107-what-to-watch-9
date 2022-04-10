@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getFilmComments } from '../../services/api';
+import { getFilmComments } from '../../services/create-api';
 import { Comment } from '../../types/comment';
 import { formatDate } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';

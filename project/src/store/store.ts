@@ -1,4 +1,4 @@
-import { createAPI } from '../services/api';
+import { createAPI } from '../services/create-api';
 import { configureStore } from '@reduxjs/toolkit';
 import { mainReducer } from './reducers/main-reducer';
 import { redirect } from './middlewares/redirect';
