@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { COUNT_LOADED_CARD, DEFAULT_GENRE } from '../../const';
 import { Film } from '../../types/films';
 import { getAllGenres, getFilmsByGenre } from '../../utils';
-import  { FilmCard } from '../film-card/film-card';
-import GenresItemList from '../genres-list/genres-list';
+import { FilmCard } from '../film-card/film-card';
+import GenresList from '../genres-list/genres-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 
 type FilmsListProps = {
@@ -19,7 +19,7 @@ export default function FilmsList({
 
   return (
     <>
-      <GenresItemList currentGenre={genre} setGenre={setGenre} allGenres={allGenres} setCountCardShow={setCountCardShow}/>
+      <GenresList currentGenre={genre} setGenre={setGenre} allGenres={allGenres} setCountCardShow={setCountCardShow}/>
       <div className="catalog__films-list">
         {currentFilms.map((film) => (<FilmCard key={film.id} film={film}/>))}
       </div>

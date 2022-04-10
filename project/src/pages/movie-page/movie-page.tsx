@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AuthorizationStatus, FavoriteFetchType } from '../../const';
+import { AuthorizationStatus, TypeFavoriteFetch } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilmById } from '../../services/api';
+import { getFilmById } from '../../services/create-api';
 import { addFavoriteAction } from '../../store/actions/api-actions';
 import { Film } from '../../types/films';
 import { checkFilmInFavoriteList } from '../../utils';
-import PageNotFound404 from '../404/404';
-import Footer from '../footer/footer';
-import Header from '../header/header';
-import LoadingScreen from '../loading-screen/loading-screen';
-import MoreLikeThis from '../more-like-this/more-like-this';
-import MovieNavigation from '../navigation/movie-navigation';
+import PageNotFound404 from '../../components/page-not-found-404/page-not-found-404';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import MoreLikeThis from '../../components/more-like-this/more-like-this';
+import MovieNavigation from '../../components/movie-navigation/movie-navigation';
 
 export default function MoviePage(): JSX.Element {
   const navigate = useNavigate();
@@ -20,15 +20,15 @@ export default function MoviePage(): JSX.Element {
   const [loading, setLoading]= useState(true);
   const {requireAuthorization} = useAppSelector((state) => state.USER);
   const {favoriteList} = useAppSelector((state) => state.DATA);
-  const [typeFavoriteAction, setTypeFavoriteAction] = useState<FavoriteFetchType>(FavoriteFetchType.Add);
+  const [typeFavoriteAction, setTypeFavoriteAction] = useState<TypeFavoriteFetch>(TypeFavoriteFetch.Add);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if(film) {
       if(checkFilmInFavoriteList(film, favoriteList)) {
-        setTypeFavoriteAction(FavoriteFetchType.Remove);
+        setTypeFavoriteAction(TypeFavoriteFetch.Remove);
       } else {
-        setTypeFavoriteAction(FavoriteFetchType.Add);
+        setTypeFavoriteAction(TypeFavoriteFetch.Add);
       }
     }
   }, [favoriteList, film]);
@@ -46,7 +46,10 @@ export default function MoviePage(): JSX.Element {
     );
   }
   if (film === null) {
-    return <PageNotFound404 />;
+    return (<PageNotFound404 />);
+  }
+  if (film === undefined) {
+    return (<PageNotFound404 />);
   }
   return (
     <React.Fragment>
@@ -56,9 +59,7 @@ export default function MoviePage(): JSX.Element {
             <img src={film.backgroundImage} alt={film.name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
-          <Header
-            authorizationStatus={AuthorizationStatus.Auth}
-          />
+          <Header/>
 
           <div className="film-card__wrap">
             <div className="film-card__desc">

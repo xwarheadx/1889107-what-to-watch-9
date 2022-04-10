@@ -1,11 +1,11 @@
 import request from 'axios';
-import { HTTP_CODE } from '../const';
+import { HttpCode } from '../const';
 import { setError } from '../store/film-processor/film-processor';
 import { clearErrorAction } from '../store/actions/api-actions';
 import { store } from '../store/store';
 import { Error } from '../types/error';
 
-export const errorHandle = (error: Error): void => {
+export const errorHandler = (error: Error): void => {
   if (!request.isAxiosError(error)) {
     throw error;
   }
@@ -19,9 +19,9 @@ export const errorHandle = (error: Error): void => {
 
   if (response) {
     switch (response.status) {
-      case HTTP_CODE.BAD_REQUEST:
-      case HTTP_CODE.UNAUTHORIZED:
-      case HTTP_CODE.NOT_FOUND:
+      case HttpCode.BAD_REQUEST:
+      case HttpCode.UNAUTHORIZED:
+      case HttpCode.NOT_FOUND:
         handleError(response.data.error);
         break;
     }

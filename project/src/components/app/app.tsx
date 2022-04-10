@@ -1,20 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import Main from '../main/main';
-import PageNotFound404 from '../404/404';
-import MyList from '../mylist/my-list';
-import SignIn from '../login/sign-in';
-import MoviePage from '../movie-page/movie-page';
-import AddReview from '../review/add-review';
-import Player from '../player/player';
+import Main from '../../pages/main-page/main-page';
+import PageNotFound404 from '../page-not-found-404/page-not-found-404';
+import MyList from '../../pages/my-list-page/my-list-page';
+import SignIn from '../../pages/sign-in-page/sign-in-page';
+import MoviePage from '../../pages/movie-page/movie-page';
+import AddReview from '../../pages/add-review-page/add-review-page';
+import Player from '../../pages/player-page/player-page';
 import PrivateRoute from '../private-route/private-route';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRoute from '../history-route/history-route';
 import browserHistory from '../../browse-history';
 
 
 function App(): JSX.Element {
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRoute history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<Main/>}/>
         <Route
@@ -44,11 +44,11 @@ function App(): JSX.Element {
           element={<Player/>}
         />
         <Route
-          path={AppRoute.Error404}
+          path="*"
           element={<PageNotFound404/>}
         />
       </Routes>
-    </HistoryRouter>
+    </HistoryRoute>
   );
 }
 

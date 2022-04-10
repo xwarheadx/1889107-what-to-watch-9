@@ -1,5 +1,5 @@
 import { Film } from './types/films';
-import { DEFAULT_GENRE, TYPE_RATING_TEXT, TYPE_RATING_VALUE} from './const';
+import { DEFAULT_GENRE, MINUTES_IN_HOUR, TypeRatingText, TypeRatingValue} from './const';
 
 export const getAllGenres = (films: Film[]) => ([...new Set([DEFAULT_GENRE, ...films.map((film) => film.genre)])]);
 
@@ -11,23 +11,23 @@ export const getFilmsByGenre = (films: Film[], genre: string) => {
 };
 
 
-export const getTextRatingDescription = (rating: number): TYPE_RATING_TEXT => {
-  if(rating < TYPE_RATING_VALUE.Bad) {
-    return TYPE_RATING_TEXT.Bad;
-  } else if(rating > TYPE_RATING_VALUE.Bad && rating < TYPE_RATING_VALUE.Normal) {
-    return TYPE_RATING_TEXT.Normal;
-  } else if(rating > TYPE_RATING_VALUE.Normal && rating < TYPE_RATING_VALUE.Good) {
-    return TYPE_RATING_TEXT.Good;
-  } else if(rating > TYPE_RATING_VALUE.Good && rating < TYPE_RATING_VALUE.VeryGood) {
-    return TYPE_RATING_TEXT.VeryGood;
+export const getTextRatingDescription = (rating: number): TypeRatingText => {
+  if(rating < TypeRatingValue.Bad) {
+    return TypeRatingText.Bad;
+  } else if(rating > TypeRatingValue.Bad && rating < TypeRatingValue.Normal) {
+    return TypeRatingText.Normal;
+  } else if(rating > TypeRatingValue.Normal && rating < TypeRatingValue.Good) {
+    return TypeRatingText.Good;
+  } else if(rating > TypeRatingValue.Good && rating < TypeRatingValue.VeryGood) {
+    return TypeRatingText.VeryGood;
   }
 
-  return TYPE_RATING_TEXT.Awesome;
+  return TypeRatingText.Awesome;
 };
 
 export const formatFilmRunTime = (time: number) => {
-  const hours = Math.floor(time / 60);
-  const minutes = time % 60;
+  const hours = Math.floor(time / MINUTES_IN_HOUR);
+  const minutes = time % MINUTES_IN_HOUR;
 
   return `${hours}h ${minutes}m`;
 };

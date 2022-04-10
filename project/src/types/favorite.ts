@@ -1,6 +1,6 @@
-import { FavoriteFetchType } from '../const';
+import { TypeFavoriteFetch } from '../const';
 
 export type FavoriteFilmFetch = {
   filmId: number,
-  type: FavoriteFetchType
+  type: TypeFavoriteFetch
 };

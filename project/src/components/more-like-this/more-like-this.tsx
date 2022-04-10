@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getSimilarFilms } from '../../services/api';
+import { getSimilarFilms } from '../../services/create-api';
 import { Film } from '../../types/films';
 import FilmsList from '../films-list/films-list';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -10,7 +10,7 @@ type MoreLikeThisProps = {
 
 function MoreLikeThis({filmId}: MoreLikeThisProps): JSX.Element {
   const [sameFilms, setSameFilms] = useState<Film[]>([]);
-  const [loading, setLoading]= useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getSimilarFilms(filmId).then((data) => {

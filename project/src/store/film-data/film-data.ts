@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FilmData } from '../../types/state';
-import { Names } from '../../const';
+import { TypeNames } from '../../const';
 
 const initialState: FilmData = {
   films: [],
@@ -10,7 +10,7 @@ const initialState: FilmData = {
 };
 
 export const filmData = createSlice({
-  name: Names.data,
+  name: TypeNames.data,
   initialState,
   reducers: {
     loadPromoFilm: (state, action) => {

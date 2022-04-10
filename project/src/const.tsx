@@ -7,7 +7,6 @@ Films = '/films',
 AddReview = '/films/:id/review',
 Player = '/player/:id',
 PromoFilm = '/promo',
-Error404 = '/404',
 Login = '/login',
 Logout = '/logout',
 Comment = '/comments',
@@ -20,12 +19,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum HTTP_CODE {
+export enum HttpCode {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
-export enum TYPE_RATING_TEXT {
+export enum TypeRatingText {
   Bad = 'Bad',
   Normal = 'Normal',
   Good = 'Good',
@@ -33,20 +32,20 @@ export enum TYPE_RATING_TEXT {
   Awesome = 'Awesome'
 }
 
-export enum TYPE_RATING_VALUE {
+export enum TypeRatingValue {
   Bad = 3,
   Normal = 5,
   Good = 8,
   VeryGood = 10
 }
 
-export enum Names {
+export enum TypeNames {
   data = 'DATA',
   film = 'FILM',
   user = 'USER',
 }
 
-export enum FavoriteFetchType {
+export enum TypeFavoriteFetch {
   Add = 1,
   Remove = 0,
 }
@@ -54,3 +53,8 @@ export enum FavoriteFetchType {
 export const DEFAULT_GENRE = 'All genres';
 export const COUNT_LOADED_CARD = 8;
 export const TIMEOUT_SHOW_ERROR = 2000;
+export const MAX_RATING = 10;
+export const PREVIEW_TIMEOUT = 1000;
+export const MIN_USER_COMMENT_SYMBOLS_COUNT = 50;
+export const MAX_USER_COMMENT_SYMBOLS_COUNT = 400;
+export const MINUTES_IN_HOUR = 60;

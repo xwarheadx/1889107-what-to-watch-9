@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Film } from '../../types/films';
 import VideoPreview from '../video-preview/video-preview';
@@ -14,6 +14,7 @@ function RenderFilmCard({
 
 }: RenderFilmCardProps): JSX.Element {
   const [autoPlay, setAutoPlay] = useState(false);
+  const navigate = useNavigate();
   return (
     <article
       className="small-film-card catalog__films-card"
@@ -22,7 +23,7 @@ function RenderFilmCard({
       }}
       onMouseOut={() => setAutoPlay(false)}
     >
-      <div className="small-film-card__image">
+      <div className="small-film-card__image" onClick={() => navigate(`/films/${film.id}`)}>
         <VideoPreview
           previewVideo={film.previewVideoLink}
           poster={film.previewImage}

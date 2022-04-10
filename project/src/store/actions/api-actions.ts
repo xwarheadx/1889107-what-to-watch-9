@@ -4,8 +4,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Film } from '../../types/films';
 import { UserComment } from '../../types/comment';
 import { redirectToRoute } from './actions';
-import { errorHandle } from '../../services/error-handler';
-import { addNewComment } from '../../services/api';
+import { errorHandler } from '../../services/error-handler';
+import { addNewComment } from '../../services/create-api';
 import { AuthData, UserData } from '../../types/user';
 import { FavoriteFilmFetch } from '../../types/favorite';
 import { dropToken, saveToken } from '../../services/token';
@@ -20,7 +20,7 @@ export const addFavoriteAction = createAsyncThunk(
       await api.post<Film>(`${AppRoute.Favorite}/${filmId}/${type}`);
       store.dispatch(fetchFavoriteListAction());
     } catch (error) {
-      errorHandle(error);
+      errorHandler(error);
     }
   },
 );
@@ -41,7 +41,7 @@ export const fetchFilmsAction = createAsyncThunk(
       const {data} = await api.get<Film[]>(AppRoute.Films);
       store.dispatch(loadFilms(data));
     } catch (error) {
-      errorHandle(error);
+      errorHandler(error);
     }
   },
 );
@@ -54,7 +54,7 @@ export const fetchPromoFilmAction = createAsyncThunk(
       const {data} = await api.get<Film>(AppRoute.PromoFilm);
       store.dispatch(loadPromoFilm(data));
     } catch (error) {
-      errorHandle(error);
+      errorHandler(error);
     }
   },
 );
@@ -81,7 +81,7 @@ export const loginAction = createAsyncThunk(
       store.dispatch(redirectToRoute(AppRoute.Main));
       store.dispatch(setUser(data));
     } catch (error) {
-      errorHandle(error);
+      errorHandler(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
@@ -96,7 +96,7 @@ export const logoutAction = createAsyncThunk(
       store.dispatch(resetUser());
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     } catch (error) {
-      errorHandle(error);
+      errorHandler(error);
     }
   },
 );
@@ -108,7 +108,7 @@ export const addCommentAction = createAsyncThunk(
       await addNewComment(comment,rating,filmId);
       store.dispatch(redirectToRoute(`${AppRoute.Films}/${filmId}`));
     } catch (error) {
-      errorHandle(error);
+      errorHandler(error);
     }
   },
 );
