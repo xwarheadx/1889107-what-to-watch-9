@@ -1,4 +1,4 @@
-import { FormEvent, useState, Fragment } from 'react';
+import { FormEvent, useState, useEffect, Fragment, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { MAX_RATING, MAX_USER_COMMENT_SYMBOLS_COUNT, MIN_USER_COMMENT_SYMBOLS_COUNT } from '../../const';
 import { addCommentAction } from '../../store/actions/api-actions';
@@ -15,17 +15,21 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
   const dispatch = useDispatch();
 
-  const checkValidationFormData = () => {
-    if(rating > 0 && comment.length >= 50){
+  const checkValidationFormData = useCallback((ratingValue, commentLength) => {
+    if(ratingValue > 0 && commentLength >= 50){
       setDisabledSubmitButton(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    checkValidationFormData(rating, comment.length);
+  }, [rating, comment.length, checkValidationFormData]);
+
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRatings(Number(evt.target.value));
-    checkValidationFormData();
   };
 
-  const ratingStars = new Array(MAX_RATING)
+  const getRatingStarsArray = new Array(MAX_RATING)
     .fill(null)
     .map((value, index) => (index + 1))
     .reverse();
@@ -33,7 +37,6 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
   const handleCommentFieldChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = evt.target;
     setComment(value);
-    checkValidationFormData();
   };
 
   const handleSubmitFormComment = (evt: FormEvent) => {
@@ -47,7 +50,7 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
       <form action="#" className="add-review__form" onSubmit={handleSubmitFormComment}>
         <div className="rating">
           <div className="rating__stars">
-            {ratingStars.map((value) => (
+            {getRatingStarsArray.map((value) => (
               <Fragment key={value}>
                 <input className="rating__input"
                   id={`star-${value}`}

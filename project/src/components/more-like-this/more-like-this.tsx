@@ -10,7 +10,7 @@ type MoreLikeThisProps = {
 
 function MoreLikeThis({filmId}: MoreLikeThisProps): JSX.Element {
   const [sameFilms, setSameFilms] = useState<Film[]>([]);
-  const [loading, setLoading]= useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getSimilarFilms(filmId).then((data) => {
