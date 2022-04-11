@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { Film } from '../../types/films';
-import { useAppSelector } from '../../hooks';
-import { getFilmById } from '../../services/create-api';
-import PageNotFound404 from '../../components/page-not-found-404/page-not-found-404';
-import AddComments from '../../components/add-comments/add-comments';
-import AddBreadcrumbs from '../../components/add-breadcrumbs/add-breadcrumbs';
-import Header from '../../components/header/header';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { AppRoute, AuthorizationStatus } from '../../../const';
+import { Film } from '../../../types/films';
+import { useAppSelector } from '../../../hooks';
+import { getFilmById } from '../../../services/create-api';
+import PageNotFound404 from '../../page-not-found-404/page-not-found-404';
+import AddComments from '../../add-comments/add-comments';
+import AddBreadcrumbs from '../../add-breadcrumbs/add-breadcrumbs';
+import Header from '../../header/header';
+import LoadingScreen from '../../loading-screen/loading-screen';
 
-export default function AddReview(): JSX.Element {
+export default function AddReviewPage(): JSX.Element {
   const {id} = useParams<{id: string}>();
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading]= useState(true);

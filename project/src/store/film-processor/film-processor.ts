@@ -1,5 +1,5 @@
 import { FilmProcess } from '../../types/state';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TypeNames } from '../../const';
 
 const initialState: FilmProcess = {
@@ -10,7 +10,7 @@ export const filmProcessor = createSlice({
   name: TypeNames.film,
   initialState,
   reducers: {
-    setError: (state, action) => {
+    setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
   },

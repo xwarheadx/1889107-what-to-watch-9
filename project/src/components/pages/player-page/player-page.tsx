@@ -1,12 +1,12 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MINUTES_IN_HOUR } from '../../const';
-import { getFilmById } from '../../services/create-api';
-import { Film } from '../../types/films';
-import PageNotFound404 from '../../components/page-not-found-404/page-not-found-404';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { MINUTES_IN_HOUR } from '../../../const';
+import { getFilmById } from '../../../services/create-api';
+import { Film } from '../../../types/films';
+import PageNotFound404 from '../../page-not-found-404/page-not-found-404';
+import LoadingScreen from '../../loading-screen/loading-screen';
 
-export default function Player(): JSX.Element {
+export default function PlayerPage(): JSX.Element {
   const navigate = useNavigate();
   const {id} = useParams<{id: string}>();
   const [film, setFilm] = useState<Film | null>(null);
@@ -74,7 +74,7 @@ export default function Player(): JSX.Element {
   }
   return (
     <div className="player">
-      <video ref={player} src={film?.videoLink} id="video" className="player__video" poster={film?.backgroundImage}></video>
+      <video ref={player} autoPlay src={film?.videoLink} id="video" className="player__video" poster={film?.backgroundImage} onPlay={() => setPlaying(true)}></video>
 
       <button type="button" className="player__exit" onClick={exitPlayer}>Exit</button>
 
@@ -84,7 +84,7 @@ export default function Player(): JSX.Element {
             <progress className="player__progress" value={videoProgress} max="100"></progress>
             <div className="player__toggler" style={{left: `${videoProgress}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{videoFullTime && videoCurrentTime ? getVideoTimeLeft(videoFullTime, videoCurrentTime) : '0:00:00'}</div>
+          <div className="player__time-value">-{videoFullTime && videoCurrentTime ? getVideoTimeLeft(videoFullTime, videoCurrentTime) : '0:00:00'}</div>
         </div>
 
         <div className="player__controls-row">

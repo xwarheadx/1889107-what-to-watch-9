@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { AppRoute } from '../const';
-import { errorHandler } from './error-handler';
+import { getErrorHandler } from './get-error-handler';
 import { getToken } from './token';
 
 const BACKEND_URL = 'https://9.react.pages.academy/wtw';
@@ -31,7 +31,7 @@ export const getFilmById = async (filmId: number) => {
     const {data} = await api.get(`${AppRoute.Films}/${filmId}`);
     return data;
   } catch (error) {
-    errorHandler(error);
+    getErrorHandler(error);
   }
 };
 
@@ -41,7 +41,7 @@ export const getSimilarFilms = async (filmId: number) => {
     const {data} = await api.get(`${AppRoute.Films}/${filmId}/similar`);
     return data;
   } catch (error) {
-    errorHandler(error);
+    getErrorHandler(error);
   }
 };
 
@@ -51,7 +51,7 @@ export const getFilmComments = async (filmId: number) => {
     const {data} = await api.get(`${AppRoute.Comment}/${filmId}`);
     return data;
   } catch (error)
-  {errorHandler(error);}
+  {getErrorHandler(error);}
 };
 
 export const addNewComment = async (comment: string,  rating: number, filmId: number) => {
@@ -60,6 +60,6 @@ export const addNewComment = async (comment: string,  rating: number, filmId: nu
     const res = await api.post(`${AppRoute.Comment}/${filmId}`, {comment, rating});
     return res;
   } catch (error) {
-    errorHandler(error);
+    getErrorHandler(error);
   }
 };

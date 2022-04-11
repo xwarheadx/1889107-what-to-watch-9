@@ -4,12 +4,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Film } from '../../types/films';
 import { UserComment } from '../../types/comment';
 import { redirectToRoute } from './actions';
-import { errorHandler } from '../../services/error-handler';
+import { getErrorHandler } from '../../services/get-error-handler';
 import { addNewComment } from '../../services/create-api';
 import { AuthData, UserData } from '../../types/user';
 import { FavoriteFilmFetch } from '../../types/favorite';
 import { dropToken, saveToken } from '../../services/token';
-import { dataIsLoading, loadFavoriteList, loadFilms, loadPromoFilm } from '../film-data/film-data';
+import { loadData, loadFavoriteList, loadFilms, loadPromoFilm } from '../film-data/film-data';
 import { requireAuthorization, resetUser, setUser } from '../user-processor/user-processor';
 import { setError } from '../film-processor/film-processor';
 
@@ -20,7 +20,7 @@ export const addFavoriteAction = createAsyncThunk(
       await api.post<Film>(`${AppRoute.Favorite}/${filmId}/${type}`);
       store.dispatch(fetchFavoriteListAction());
     } catch (error) {
-      errorHandler(error);
+      getErrorHandler(error);
     }
   },
 );
@@ -37,11 +37,13 @@ export const fetchFilmsAction = createAsyncThunk(
   'data/fetchFilms',
   async () => {
     try {
-      store.dispatch(dataIsLoading());
       const {data} = await api.get<Film[]>(AppRoute.Films);
+      store.dispatch(loadData());
+      store.dispatch(setError(''));
       store.dispatch(loadFilms(data));
     } catch (error) {
-      errorHandler(error);
+      getErrorHandler(error);
+      store.dispatch(redirectToRoute('/500'));
     }
   },
 );
@@ -50,11 +52,11 @@ export const fetchPromoFilmAction = createAsyncThunk(
   'data/fetchPromoFilm',
   async () => {
     try {
-      store.dispatch(dataIsLoading());
+      store.dispatch(loadData());
       const {data} = await api.get<Film>(AppRoute.PromoFilm);
       store.dispatch(loadPromoFilm(data));
     } catch (error) {
-      errorHandler(error);
+      getErrorHandler(error);
     }
   },
 );
@@ -81,7 +83,7 @@ export const loginAction = createAsyncThunk(
       store.dispatch(redirectToRoute(AppRoute.Main));
       store.dispatch(setUser(data));
     } catch (error) {
-      errorHandler(error);
+      getErrorHandler(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
@@ -96,7 +98,7 @@ export const logoutAction = createAsyncThunk(
       store.dispatch(resetUser());
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     } catch (error) {
-      errorHandler(error);
+      getErrorHandler(error);
     }
   },
 );
@@ -108,7 +110,8 @@ export const addCommentAction = createAsyncThunk(
       await addNewComment(comment,rating,filmId);
       store.dispatch(redirectToRoute(`${AppRoute.Films}/${filmId}`));
     } catch (error) {
-      errorHandler(error);
+      getErrorHandler(error);
+
     }
   },
 );

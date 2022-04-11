@@ -1,9 +1,9 @@
-import { useAppSelector } from '../../hooks';
-import FilmsList from '../films-list/films-list';
-import Footer from '../footer/footer';
-import Header from '../header/header';
-import LoadingScreen from '../loading-screen/loading-screen';
-import PromoFilm from '../promo-film/promo-film';
+import { useAppSelector } from '../../../hooks';
+import FilmsCatalog from '../../film-catalog/film-catalog';
+import Footer from '../../footer/footer';
+import Header from '../../header/header';
+import LoadingScreen from '../../loading-screen/loading-screen';
+import PromoFilm from '../../promo-film/promo-film';
 
 export default function MainPage(): JSX.Element {
 
@@ -32,7 +32,7 @@ export default function MainPage(): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <FilmsList films={films}/>
+          <FilmsCatalog films={films}/>
         </section>
         <Footer />
       </div>

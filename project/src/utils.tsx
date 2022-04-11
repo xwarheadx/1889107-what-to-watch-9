@@ -10,7 +10,6 @@ export const getFilmsByGenre = (films: Film[], genre: string) => {
   return films.filter((film) => film.genre === genre);
 };
 
-
 export const getTextRatingDescription = (rating: number): TypeRatingText => {
   if(rating < TypeRatingValue.Bad) {
     return TypeRatingText.Bad;
@@ -45,3 +44,4 @@ export const checkFilmInFavoriteList = (film: Film, favoritList: Film[]) => {
 
   return false;
 };
+

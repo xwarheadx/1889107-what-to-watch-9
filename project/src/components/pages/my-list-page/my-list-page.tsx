@@ -1,8 +1,8 @@
-import { useAppSelector } from '../../hooks';
-import Header from '../../components/header/header';
-import FilmsList from '../../components/films-list/films-list';
+import { useAppSelector } from '../../../hooks';
+import Header from '../../header/header';
+import FilmsList from '../../films-list/films-list';
 
-export default function MyList(): JSX.Element {
+export default function MyListPage(): JSX.Element {
   const {favoriteList} = useAppSelector((state) => state.DATA);
   return (
     <div className="user-page">

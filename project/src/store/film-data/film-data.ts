@@ -17,7 +17,7 @@ export const filmData = createSlice({
       state.promoFilm = action.payload;
       state.isFilmDataLoaded = true;
     },
-    dataIsLoading: (state) => {
+    loadData: (state) => {
       state.isFilmDataLoaded = false;
     },
     loadFilms: (state, action) => {
@@ -31,4 +31,4 @@ export const filmData = createSlice({
   },
 });
 
-export const {loadPromoFilm, dataIsLoading, loadFilms, loadFavoriteList} = filmData.actions;
+export const {loadPromoFilm, loadData, loadFilms, loadFavoriteList} = filmData.actions;

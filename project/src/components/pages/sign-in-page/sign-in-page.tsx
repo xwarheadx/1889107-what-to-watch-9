@@ -1,12 +1,12 @@
 import { FormEvent, useRef,useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthorizationStatus } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginAction } from '../../store/actions/api-actions';
-import Footer from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
+import { AuthorizationStatus } from '../../../const';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { loginAction } from '../../../store/actions/api-actions';
+import Footer from '../../footer/footer';
+import Logo from '../../logo/logo';
 
-export default function SignIn(): JSX.Element {
+export default function SignInPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const {requireAuthorization} = useAppSelector((state) => state.USER);
   const emailInput = useRef<HTMLInputElement>(null);

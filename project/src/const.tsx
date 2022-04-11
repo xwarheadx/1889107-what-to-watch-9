@@ -11,6 +11,7 @@ Login = '/login',
 Logout = '/logout',
 Comment = '/comments',
 Favorite = '/favorite',
+ServerError= '/500',
 }
 
 export enum AuthorizationStatus {
@@ -20,9 +21,9 @@ export enum AuthorizationStatus {
 }
 
 export enum HttpCode {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
 }
 export enum TypeRatingText {
   Bad = 'Bad',
@@ -58,3 +59,5 @@ export const PREVIEW_TIMEOUT = 1000;
 export const MIN_USER_COMMENT_SYMBOLS_COUNT = 50;
 export const MAX_USER_COMMENT_SYMBOLS_COUNT = 400;
 export const MINUTES_IN_HOUR = 60;
+export const MAX_GENRE_ARRAY = 9;
+export const MAX_SIMILAR_FILMS = 4;

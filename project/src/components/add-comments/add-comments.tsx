@@ -11,6 +11,7 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
 
   const [rating, setRatings] = useState(0);
   const [comment, setComment] = useState('');
+  const [isDisable, setIsDisable] = useState(false);
   const dispatch = useDispatch();
 
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +30,7 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
 
   const handleSubmitFormComment = (evt: FormEvent) => {
     evt.preventDefault();
+    setIsDisable(true);
     dispatch(addCommentAction({filmId, comment, rating}));
   };
 
@@ -46,6 +48,7 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
                   value={value}
                   checked={rating === value}
                   onChange={handleRatingChange}
+                  disabled={isDisable}
                 />
                 <label
                   className="rating__label"
@@ -58,11 +61,11 @@ export default function AddComments({filmId}: AddCommentsProps): JSX.Element {
         </div>
         <div className="add-review__text">
           <textarea onChange={handleCommentFieldChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={comment} required
-            maxLength={MAX_USER_COMMENT_SYMBOLS_COUNT}
+            maxLength={MAX_USER_COMMENT_SYMBOLS_COUNT} disabled={isDisable}
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={comment.length < MIN_USER_COMMENT_SYMBOLS_COUNT || comment.length > MAX_USER_COMMENT_SYMBOLS_COUNT || !rating}>Post</button>
+            <button className="add-review__btn" type="submit" disabled={comment.length < MIN_USER_COMMENT_SYMBOLS_COUNT || comment.length > MAX_USER_COMMENT_SYMBOLS_COUNT || !rating || isDisable}>Post</button>
           </div>
         </div>
       </form>

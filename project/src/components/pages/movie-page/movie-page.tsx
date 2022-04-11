@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AuthorizationStatus, TypeFavoriteFetch } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilmById } from '../../services/create-api';
-import { addFavoriteAction } from '../../store/actions/api-actions';
-import { Film } from '../../types/films';
-import { checkFilmInFavoriteList } from '../../utils';
-import PageNotFound404 from '../../components/page-not-found-404/page-not-found-404';
-import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
-import MoreLikeThis from '../../components/more-like-this/more-like-this';
-import MovieNavigation from '../../components/movie-navigation/movie-navigation';
+import { AuthorizationStatus, TypeFavoriteFetch } from '../../../const';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { getFilmById } from '../../../services/create-api';
+import { addFavoriteAction } from '../../../store/actions/api-actions';
+import { Film } from '../../../types/films';
+import { checkFilmInFavoriteList } from '../../../utils';
+import PageNotFound404 from '../../page-not-found-404/page-not-found-404';
+import Footer from '../../footer/footer';
+import Header from '../../header/header';
+import LoadingScreen from '../../loading-screen/loading-screen';
+import MoreLikeThis from '../../more-like-this/more-like-this';
+import MovieNavigation from '../../movie-navigation/movie-navigation';
 
 export default function MoviePage(): JSX.Element {
   const navigate = useNavigate();
